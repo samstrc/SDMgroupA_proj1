@@ -45,10 +45,10 @@ boxplot(sleep_hours ~ gender, data = df,
         ylab = "Hours of Sleep (per night)",
         col  = "grey")
 
-# Tables to show practical differences between groups
+# Tables to show practical differences in summaries between groups
 aggregate(exam_score ~ gender, data = df, mean) # Women and men have similar mean exam scores
 aggregate(exam_score ~ diet_quality, data = df, mean) # People with poorer diets tended to score worse on average
 
 
-# Table to look at 
+# Table to look at count/frequency differences
 table(df$gender, df$diet_quality) # More women report having a poor diet, men are more confident in their diets
