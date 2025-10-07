@@ -1,9 +1,6 @@
 # Group A project 1 
-data_dir = "/Users/samstrickler/School/Statistical Database Management/Project 1"
-fp <- function(...) file.path(data_dir, ...)
-
-
-df <- read.csv(fp("student_habits.csv"), header = TRUE)
+directory <- "https://raw.githubusercontent.com/samstrc/SDMgroupA/refs/heads/main/student_habits.csv"
+df <- read.csv(directory, header = TRUE)
 numeric_df <- df[sapply(df, is.numeric)] # Stores numeric columns only in new df
 
 names(df) # Print the names of each column 
@@ -19,11 +16,11 @@ cor.test(numeric_df$mental_health_rating, numeric_df$exam_score) # Test to see i
 # 3 Cont. variables: study_hours_per_day, sleep_hours, exam_score
 # 2 Categ. variables: gender, diet_quality
 
-counts_sleepqual <- table(df$gender)
-counts_sleepqual # Kinda balanced
+counts_gender <- table(df$gender)
+counts_gender # Kinda balanced
 
-counts_occupation <- table(df$diet_quality)
-counts_occupation # Mostly balanced
+counts_diet_quality <- table(df$diet_quality)
+counts_diet_quality # Mostly balanced
 
 
 # ----- PLOTS -----
@@ -39,13 +36,13 @@ for (col in names(numeric_df)) { # For each column in the dataframe, make histog
 plot(df$study_hours_per_day, df$exam_score, xlab="Hours Studied (per day)", ylab="Exam Score (%)", type="p")
 
 # Bar plot 
-barplot(counts_occupation, xlab="Occupation", ylab="count", col="tan")
-barplot(counts_sleepqual, xlab="Sleep Quality", ylab="count", col="tan")
+barplot(counts_gender, xlab="Gender", ylab="count", col="grey")
+barplot(counts_diet_quality, xlab="Diet Quality", ylab="count", col="grey")
 
-# Boxplot of BMI across occupations..this is silly baha
-boxplot(BMI ~ Occupation, data = df,
+# Boxplot of sleep hours across gender
+boxplot(df$sleep_hours ~ df$gender, data = df,
         notch = TRUE,
-        xlab = "Occupation",
-        ylab = "BMI",
-        col  = "saddlebrown")
+        xlab = "Gender",
+        ylab = "Hours of Sleep (per night)",
+        col  = "grey")
 
