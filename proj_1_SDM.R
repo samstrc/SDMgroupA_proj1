@@ -1,6 +1,8 @@
 # Group A project 1 - Sam, Chelsea, Robert
 url <- "https://raw.githubusercontent.com/samstrc/SDMgroupA/refs/heads/main/student_habits.csv"
-df <- read.csv(url, header = TRUE)
+df_before_sample <- read.csv(url, header = TRUE)
+set.seed(1234)
+df <- df_before_sample[sample(nrow(df_before_sample), 150), ]
 numeric_df <- df[sapply(df, is.numeric)] # Stores numeric columns only in new df
 
 # Basic Analysis
