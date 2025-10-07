@@ -52,3 +52,5 @@ aggregate(exam_score ~ diet_quality, data = df, mean) # People with poorer diets
 
 # Table to look at count/frequency differences
 table(df$gender, df$diet_quality) # More women report having a poor diet, men are more confident in their diets
+
+#comment 3 
