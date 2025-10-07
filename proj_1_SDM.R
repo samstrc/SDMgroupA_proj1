@@ -22,7 +22,23 @@ counts_diet_quality <- table(df$diet_quality)
 counts_diet_quality # Mostly balanced
 
 
-# ----- Data Visualization -----
+# ----- Data Visualizations -----
+# QQ Plots to visualize normality of study_hours_per_day, sleep_hours, exam_score
+# QQ plots for normality check
+par(mfrow = c(1, 3))  # show 3 plots side-by-side
+
+qqnorm(df$study_hours_per_day, main = "QQ Plot: Study Hours per Day")
+qqline(df$study_hours_per_day, col = "grey")
+
+qqnorm(df$sleep_hours, main = "QQ Plot: Sleep Hours")
+qqline(df$sleep_hours, col = "grey")
+
+qqnorm(df$exam_score, main = "QQ Plot: Exam Score")
+qqline(df$exam_score, col = "grey")
+
+par(mfrow = c(1, 1))  # reset plot layout
+
+
 # Loop for histograms 
 for (col in names(numeric_df)) { # For each column in the dataframe, make histogram
     hist(numeric_df[[col]], 
