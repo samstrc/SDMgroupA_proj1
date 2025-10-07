@@ -1,21 +1,20 @@
-# Group A project 1 
-directory <- "https://raw.githubusercontent.com/samstrc/SDMgroupA/refs/heads/main/student_habits.csv"
-df <- read.csv(directory, header = TRUE)
+# Group A project 1 - Sam, Chelsea, Robert
+url <- "https://raw.githubusercontent.com/samstrc/SDMgroupA/refs/heads/main/student_habits.csv"
+df <- read.csv(url, header = TRUE)
 numeric_df <- df[sapply(df, is.numeric)] # Stores numeric columns only in new df
 
+# Basic Analysis
 names(df) # Print the names of each column 
-summary(df)
-head(df, 20) 
+summary(df) 
+head(df, 20) # First 20 data points
 
-
-# Pair plot for every numeric variable
-pairs(numeric_df, pch=6, col='black', lower.panel=panel.smooth) 
+# Correlation Analysis
+pairs(numeric_df, pch=6, col='black', lower.panel=panel.smooth) # Pair plot for every numeric variable
 cor(numeric_df) # Print correlations for all variables
 cor.test(numeric_df$mental_health_rating, numeric_df$exam_score) # Test to see if mental health and exam score's relationship is similar outside of this dataset
 
 # 3 Cont. variables: study_hours_per_day, sleep_hours, exam_score
 # 2 Categ. variables: gender, diet_quality
-
 counts_gender <- table(df$gender)
 counts_gender # Kinda balanced
 
@@ -23,7 +22,7 @@ counts_diet_quality <- table(df$diet_quality)
 counts_diet_quality # Mostly balanced
 
 
-# ----- PLOTS -----
+# ----- Data Visualization -----
 # Loop for histograms 
 for (col in names(numeric_df)) { # For each column in the dataframe, make histogram
     hist(numeric_df[[col]], 
@@ -39,10 +38,17 @@ plot(df$study_hours_per_day, df$exam_score, xlab="Hours Studied (per day)", ylab
 barplot(counts_gender, xlab="Gender", ylab="count", col="grey")
 barplot(counts_diet_quality, xlab="Diet Quality", ylab="count", col="grey")
 
-# Boxplot of sleep hours across gender
-boxplot(df$sleep_hours ~ df$gender, data = df,
+# Box plot of sleep hours across gender
+boxplot(sleep_hours ~ gender, data = df,
         notch = TRUE,
         xlab = "Gender",
         ylab = "Hours of Sleep (per night)",
         col  = "grey")
 
+# Tables to show practical differences between groups
+aggregate(exam_score ~ gender, data = df, mean) # Women and men have similar mean exam scores
+aggregate(exam_score ~ diet_quality, data = df, mean) # People with poorer diets tended to score worse on average
+
+
+# Table to look at 
+table(df$gender, df$diet_quality) # More women report having a poor diet, men are more confident in their diets
