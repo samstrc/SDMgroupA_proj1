@@ -1,14 +1,19 @@
 # Group A project 1 - Sam, Chelsea, Robert
 url <- "https://raw.githubusercontent.com/samstrc/SDMgroupA/refs/heads/main/student_habits.csv"
-df_before_sample <- read.csv(url, header = TRUE)
-set.seed(1234)
-df <- df_before_sample[sample(nrow(df_before_sample), 150), ]
+df_before_sample <- read.csv(url, header = TRUE) # Import dataset
+set.seed(1234) # Set seed for reproducibility 
+df <- df_before_sample[sample(nrow(df_before_sample), 150), ] # Sample 150 students randomly
 numeric_df <- df[sapply(df, is.numeric)] # Stores numeric columns only in new df
+short_df <- df[, c("study_hours_per_day", "sleep_hours", "exam_score", "gender", "diet_quality")]
 
 # Basic Analysis
 names(df) # Print the names of each column 
-summary(df) 
 head(df, 20) # First 20 data points
+sum(is.na(df)) # Verify that there is no missing data
+
+# Descriptive statistics 
+summary(df) # Descriptive statistics on whole df
+summary(short_df) # Descriptive statistics on our chosen variables
 
 # Correlation Analysis
 pairs(numeric_df, pch=6, col='black', lower.panel=panel.smooth) # Pair plot for every numeric variable
@@ -46,22 +51,51 @@ for (col in names(numeric_df)) { # For each column in the dataframe, make histog
     hist(numeric_df[[col]], 
          main = paste("Histogram of", col), # Concatenates two strings for the title
          xlab = col, # Column label/name/variable
-         col = 'grey')
+         col = 'black')
 }
+
+# Bar plot 
+barplot(counts_gender, xlab="Gender", ylab="count", col="black")
+barplot(counts_diet_quality, xlab="Diet Quality", ylab="count", col="black")
 
 # Scatter plot 
 plot(df$study_hours_per_day, df$exam_score, xlab="Hours Studied (per day)", ylab="Exam Score (%)", type="p")
-
-# Bar plot 
-barplot(counts_gender, xlab="Gender", ylab="count", col="grey")
-barplot(counts_diet_quality, xlab="Diet Quality", ylab="count", col="grey")
+plot(df$sleep_hours, df$exam_score, xlab="Hours Slept (per night)", ylab="Exam Score (%)", type="p")
 
 # Box plot of sleep hours across gender
 boxplot(sleep_hours ~ gender, data = df,
-        notch = TRUE,
+        notch = FALSE,
         xlab = "Gender",
         ylab = "Hours of Sleep (per night)",
-        col  = "grey")
+        col  = "lightgrey")
+
+boxplot(exam_score ~ gender, data = df,
+        notch = FALSE,
+        xlab = "Gender",
+        ylab = "Exam Score (%)",
+        col  = "lightgrey")
+
+boxplot(exam_score ~ diet_quality, data = df,
+        notch = FALSE,
+        xlab = "Diet Quality",
+        ylab = "Exam Score (%)",
+        col  = "lightgrey",
+        main = "Exam Score by Diet Quality")
+
+boxplot(study_hours_per_day ~ diet_quality, data = df,
+        notch = FALSE,
+        xlab = "Diet Quality",
+        ylab = "Study Hours per Day",
+        col  = "lightgrey",
+        main = "Study Hours by Diet Quality")
+
+boxplot(study_hours_per_day ~ gender, data = df,
+        notch = FALSE,
+        xlab = "Diet",
+        ylab = "Study Hours per Day",
+        col  = "lightgrey",
+        main = "Study Hours by Gender")
+
 
 # Tables to show practical differences in summaries between groups
 aggregate(exam_score ~ gender, data = df, mean) # Women and men have similar mean exam scores
@@ -70,5 +104,4 @@ aggregate(exam_score ~ diet_quality, data = df, mean) # People with poorer diets
 
 # Table to look at count/frequency differences
 table(df$gender, df$diet_quality) # More women report having a poor diet, men are more confident in their diets
-
-#comment 3 
+prop.table(table(df$gender, df$diet_quality), margin = 1)
