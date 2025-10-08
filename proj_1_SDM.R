@@ -18,7 +18,6 @@ summary(short_df) # Descriptive statistics on our chosen variables
 # Correlation Analysis
 pairs(numeric_df, pch=6, col='black', lower.panel=panel.smooth) # Pair plot for every numeric variable
 cor(numeric_df) # Print correlations for all variables
-cor.test(numeric_df$mental_health_rating, numeric_df$exam_score) # Test to see if mental health and exam score's relationship is similar outside of this dataset
 
 # 3 Cont. variables: study_hours_per_day, sleep_hours, exam_score
 # 2 Categ. variables: gender, diet_quality
@@ -47,7 +46,7 @@ par(mfrow = c(1, 1))  # reset plot layout
 
 
 # Loop for histograms 
-for (col in names(numeric_df)) { # For each column in the dataframe, make histogram
+for (col in names(numeric_df)) { # For each column in the data frame, make histogram
     hist(numeric_df[[col]], 
          main = paste("Histogram of", col), # Concatenates two strings for the title
          xlab = col, # Column label/name/variable
