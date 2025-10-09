@@ -66,13 +66,15 @@ boxplot(sleep_hours ~ gender, data = df,
         notch = FALSE,
         xlab = "Gender",
         ylab = "Hours of Sleep (per night)",
-        col  = "lightgrey")
+        col  = "lightgrey",
+        main = "Sleep Hours by Gender")
 
 boxplot(exam_score ~ gender, data = df,
         notch = FALSE,
         xlab = "Gender",
         ylab = "Exam Score (%)",
-        col  = "lightgrey")
+        col  = "lightgrey", 
+        main = "Exam Score by Gender")
 
 boxplot(exam_score ~ diet_quality, data = df,
         notch = FALSE,
